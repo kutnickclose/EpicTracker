@@ -10,7 +10,6 @@ window.Epictracker.Views.ProjectsIndex = Backbone.View.extend({
 	},
 	
 	render: function () {
-		console.log(this.collection)
 		var content = this.template({
 			projects : this.collection
 		});

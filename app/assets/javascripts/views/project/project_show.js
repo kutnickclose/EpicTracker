@@ -7,7 +7,7 @@ window.Epictracker.Views.ProjectShow = Backbone.CompositeView.extend({
 	},
 	
 	events : {
-		
+		"click .addstory" : "addStory"
 	},
 	
 	render: function () {
@@ -25,7 +25,6 @@ window.Epictracker.Views.ProjectShow = Backbone.CompositeView.extend({
 			var view = new Epictracker.Views.ListShow({
 				model: list
 			});
-			console.log("this far")
 			this.addSubView('#lists', view.render());
 		}, this );
 	}

@@ -1,0 +1,1 @@
+json.(story, :id, :title, :story_type, :points, :state, :description, :rank, :list_id, :created_at, :updated_at)

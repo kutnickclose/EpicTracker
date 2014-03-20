@@ -13,7 +13,7 @@ module Api
       #come back and change this to be built on the user like trello
       @project = Project.new(project_params)
       if @project.save
-        render partial: "api/projects/project"
+        render partial: "api/projects/project", locals: { project: @project }
       else
         render json: {errors: @projects.errors.full_messages}, status: 422
       end
@@ -30,7 +30,7 @@ module Api
   
     def show
       @project = Project.find(params[:id])
-      render partial: "api/projects/project" #, locals: { project: @project }
+      render partial: "api/projects/project", locals: { project: @project }
     end
   
     private
