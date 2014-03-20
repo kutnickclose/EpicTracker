@@ -15,7 +15,7 @@ module Api
       if @project.save
         render partial: "api/projects/project"
       else
-        render json: {errors: @board.errors.full_messages}, status: 422
+        render json: {errors: @projects.errors.full_messages}, status: 422
       end
     end
   

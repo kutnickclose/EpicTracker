@@ -50,6 +50,7 @@ window.Epictracker.Routers.AppRouter = Backbone.Router.extend({
 				}
 			});
 		} else {
+			project.fetch()
 			callback(project);
 		}
 	}

@@ -11,10 +11,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140319032110) do
+ActiveRecord::Schema.define(version: 20140319214256) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "lists", force: true do |t|
+    t.string   "name",       null: false
+    t.integer  "project_id", null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "lists", ["project_id"], name: "index_lists_on_project_id", using: :btree
 
   create_table "projects", force: true do |t|
     t.string   "name",       default: "Sample Project", null: false
