@@ -7,7 +7,7 @@ window.Epictracker.Views.ProjectShow = Backbone.CompositeView.extend({
 	},
 	
 	events : {
-		"click .addstory" : "addStory"
+		"click .addStory" : "addStory"
 	},
 	
 	render: function () {
@@ -27,6 +27,27 @@ window.Epictracker.Views.ProjectShow = Backbone.CompositeView.extend({
 			});
 			this.addSubView('#lists', view.render());
 		}, this );
+	},
+	
+	addStory: function () {
+		var view = new Epictracker.Views.StoryForm({
+			//stories-collection
+			collection: this._getIceBoxCollectionOfStories(),
+			//list
+			list: this._getList()
+		});
+		this.addSubView('.icebox', view.render());
+		// come back and finish this
+	},
+	
+	_getIceBoxCollectionOfStories: function () {
+		var iceboxStories = this.model.lists().findWhere({name: "icebox"}).stories()
+		return iceboxStories
+	},
+	
+	_getList: function () {
+		var list = this.model.lists().findWhere({name: "icebox"})
+		return list
 	}
 	
 	

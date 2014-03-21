@@ -1,0 +1,32 @@
+<form>
+	<input type="text" name=story[title] placeholder="story title" class="storyTitle">
+	<button class='save'>Save</button>
+	
+	<br>
+
+	<label>Story Type</label>
+	<select name=story["story_type"] class="storyType">
+		<option value="feature">feature</option>
+		<option value="bug">bug</option>
+		<option value="chore">chore</option>
+	</select>
+	
+	<br>
+	
+	<label>Points</label>
+	<select name=story["points"] class="storyPoints">
+		<option value=0>0</option>
+		<option value=1>1</option>
+		<option value=2>2</option>
+		<option value=3>3</option>
+	</select>
+	
+	<br>
+	
+	<label>
+	  Description
+		<br>
+		<textarea name=story["description"] class="storyDescription"></textarea>
+	</label>
+	
+</form>

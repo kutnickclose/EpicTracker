@@ -27,6 +27,14 @@ module Api
     end
   
     def update
+      @story = Story.find(params[:id])
+      
+      if @story.update_attributes(story_params)
+        render partial: "api/stories/story", locals: {story: @story}
+      else
+        render json: { errors: @story.errors.full_messages }, status: 422
+      end
+        
     end
   
     def destroy

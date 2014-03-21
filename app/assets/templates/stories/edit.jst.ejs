@@ -1,0 +1,35 @@
+<form id="frmPreselect" name="frmPreselect">
+	<span class="save">&#9662;<span>
+	<input type="text" name=story[title] placeholder="story title" 
+		class="storyTitle" value="<%= story.escape('title') %>">
+	<button class='save'>Save</button>
+	
+	<br>
+
+	<label>Story Type</label>
+	
+	<select name=story["story_type"] class="storyType" id="story_type">
+		<option value="feature" <%= (story.get('story_type') === 'feature') ? 'selected' : '' %>>feature</option>
+		<option value="bug" <%= (story.get('story_type') === 'bug') ? 'selected' : '' %>>bug</option>
+		<option value="chore" <%= (story.get('story_type') === 'chore') ? 'selected' : '' %>>chore</option>
+	</select>
+	
+	<br>
+	
+	<label>Points</label>
+	<select name=story["points"] class="storyPoints">
+		<option value=0 <%= (story.get('points') === "0" ) ? 'selected' : '' %>>0</option>
+		<option value=1 <%= (story.get('points') === "1" ) ? 'selected' : '' %>>1</option>
+		<option value=2 <%= (story.get('points') === "2" ) ? 'selected' : '' %>>2</option>
+		<option value=3 <%= (story.get('points') === "3" ) ? 'selected' : '' %>>3</option>
+	</select>
+	
+	<br>
+	
+	<label>
+	  Description
+		<br>
+		<input type=text name=story["description"] class="storyDescription" value="<%= story.escape('description') %>"></textarea>
+	</label>
+	
+</form>

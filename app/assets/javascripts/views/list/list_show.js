@@ -8,7 +8,6 @@ window.Epictracker.Views.ListShow = Backbone.CompositeView.extend({
 	},
 	
 	events: {
-		
 	},
 	
 	render: function () {
@@ -24,7 +23,8 @@ window.Epictracker.Views.ListShow = Backbone.CompositeView.extend({
 	renderStories: function () {
 		this.model.stories().each(function(story) {
 			var view = new Epictracker.Views.StoryShow({
-				model: story
+				model: story,
+				list: this.model
 			})
 			this.addSubView('#stories', view.render());
 		}, this);
