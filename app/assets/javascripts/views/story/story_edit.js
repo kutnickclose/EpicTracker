@@ -15,7 +15,8 @@ window.Epictracker.Views.StoryEdit = Backbone.View.extend({
 	},
 	
 	events: {
-		"click .save" : "updateStory"
+		"click .save" : "updateStory",
+		"click .delete" : "deleteStory"
 	},
 	
 	updateStory: function(event) {
@@ -27,6 +28,7 @@ window.Epictracker.Views.StoryEdit = Backbone.View.extend({
 		var storyPoints = this.$(".storyPoints").val();
 		var storyDescription = this.$(".storyDescription").val();
 		var storyRank = this.model.get('rank')
+		var storyState = this.$(".storyState").val()
 		
 		this.model.set({
 			title: storyTitle,
@@ -34,10 +36,17 @@ window.Epictracker.Views.StoryEdit = Backbone.View.extend({
 			points: storyPoints,
 			description: storyDescription,
 			rank: storyRank,
-			list_id: this.list.get('id')
+			list_id: this.list.get('id'),
+			state: storyState
 		});
 		this.model.save();
 		
+	},
+	
+	deleteStory: function(event) {
+		event.preventDefault()
+		this.collection.remove(this.model)
+		this.model.destroy()
 	}
 	
 	

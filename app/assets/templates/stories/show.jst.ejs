@@ -1,1 +1,47 @@
-<h4 class="storyShow"><span class="storyBlock"><span class="edit">&#x25B8</span> <%= story.escape('title') %></span></h4>
+<h4 class="storyShow"><span class="storyBlock"><span class="edit">&#x25B8</span>
+<% if (story.get('story_type') === "feature") { %>
+	<%= '&#9733' %>
+<% } else if (story.get('story_type') === "bug" ) { %>
+	<%= '&#8416' %>
+<% } else { %>
+	<%= '&#9881' %>
+<% } %>
+
+<% if (story.get('points') === "0") { %>
+	<%= '[0]' %>
+<% } else if (story.get('points') === "1" ) { %>
+	<%= '[1]' %>
+<% } else if (story.get('points') === "2" ) { %>
+	<%= '[2]' %>
+<% } else if (story.get('points') === "3" ) { %>
+	<%= '[3]' %>
+<% } else { %>
+	<%= '[*]' %>
+<% } %>
+	 
+<%= story.escape('title') %>
+
+<% if (story.get('points') === "unestimated") { %>
+	<button class="setZero"><%='0'%></button>
+	<button class="setOne"><%='1'%></button>
+	<button class="setTwo"><%='2'%></button>
+	<button class="setThree"><%='3'%></button>
+<% } else { %>
+	<% if (story.get('state') === "unscheduled") { %>
+		<%= '' %>
+	<% } else if (story.get('state') === "unstarted" ) { %>
+		<button class="start">start</button>
+	<% } else if (story.get('state') === "started" ) { %>
+		<button class="finish">finish</button>
+	<% } else if (story.get('state') === "finished" ) { %>
+		<button class="deliver">deliver</button>
+	<% } else if (story.get('state') === "delivered" ) { %>
+		<button class="accept">accept</button> <button class="reject">reject</button>
+	<% } else if (story.get('state') === "rejected" ) { %>
+		<button class="restart">restart</button>
+	<% } else { %>
+		<%= '' %>
+	<% } %>
+<% } %>
+
+</span></h4>

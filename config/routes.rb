@@ -11,9 +11,6 @@ Epictracker::Application.routes.draw do
       resources :stories, only: [:create, :index, :destroy, :update]
     end
     
-    resources :stories, only: [:show, :update, :destroy]
+    resources :stories, only: [:show, :update]
   end
 end
-
-
-#get routes for lists/stories working.

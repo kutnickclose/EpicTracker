@@ -24,10 +24,11 @@ window.Epictracker.Views.ListShow = Backbone.CompositeView.extend({
 		this.model.stories().each(function(story) {
 			var view = new Epictracker.Views.StoryShow({
 				model: story,
-				list: this.model
+				list: this.model,
+				collection: this.model.stories()
 			})
 			this.addSubView('#stories', view.render());
 		}, this);
-	}
+	},
 	
 })

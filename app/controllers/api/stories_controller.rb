@@ -38,6 +38,8 @@ module Api
     end
   
     def destroy
+      @story = Story.find(params[:id]).try(:destroy)
+      render json: nil
     end
   
     private
