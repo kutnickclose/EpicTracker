@@ -1,6 +1,10 @@
 window.Epictracker.Models.Project = Backbone.Model.extend({
 	urlRoot: "/api/projects",
 	
+	initialize: function() {
+
+	},
+	
 	parse: function(response) {
 		if (response.lists){
 			this.lists().set(response.lists, {parse: true});

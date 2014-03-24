@@ -24,13 +24,22 @@ window.Epictracker.Views.ProjectsIndex = Backbone.View.extend({
 		var newProject = new Epictracker.Models.Project({
 			name: projectName
 		});
-		newProject.save({
-			success: function () {
-				that.collection.add(newProject)
-				that.collection.fetch()
-			}
-		})
-		
+
+		newProject.save()
+		// 	success: function () {
+		// 		console.log("success")
+		// 		that.collection.add(newProject)
+		// 		that.collection.fetch()
+		// 		that.render
+		// 		console.log("success")
+		// 	}, 
+		// 	
+		// 	error: function () {
+		// 		console.log("fail")
+		// 	}
+		// 	
+		// });
+		this.collection.add(newProject)
 	}
 	
 	

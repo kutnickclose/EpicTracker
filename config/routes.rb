@@ -14,3 +14,4 @@ Epictracker::Application.routes.draw do
     resources :stories, only: [:show, :update]
   end
 end
+

@@ -1,4 +1,4 @@
-<h4 class="storyShow"><span class="storyBlock"><span class="edit">&#x25B8</span>
+<li class="storyShow" data-rank="<%= story.get('rank') %>" data-id="<%= story.get('id') %>" data-list-id="<%= story.get('list_id') %>"><span class="storyBlock"><span class="edit">&#x25B8</span>
 <% if (story.get('story_type') === "feature") { %>
 	<%= '&#9733' %>
 <% } else if (story.get('story_type') === "bug" ) { %>
@@ -44,4 +44,4 @@
 	<% } %>
 <% } %>
 
-</span></h4>
+</span></li>

@@ -14,3 +14,7 @@
 .hidden {
 	display: none;
 }
+
+ul {
+  min-height: 12px;
+}

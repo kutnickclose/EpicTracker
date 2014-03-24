@@ -1,5 +1,5 @@
 module Api
-  class StoriesController < ApplicationController
+  class StoriesController < ApiController
   
     def index
       @stories = List.find(params[:list_id]).stories

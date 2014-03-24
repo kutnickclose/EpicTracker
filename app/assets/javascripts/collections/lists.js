@@ -10,3 +10,4 @@ window.Epictracker.Collections.Lists = Backbone.Collection.extend({
 	}
 	
 })
+

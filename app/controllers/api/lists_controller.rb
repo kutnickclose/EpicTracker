@@ -1,6 +1,6 @@
 module Api
 
-  class ListsController < ApplicationController
+  class ListsController < ApiController
   
     def new
     end
@@ -26,7 +26,7 @@ module Api
   
     private
     def list_params
-      params.require(:list).permit(:name)
+      params.require(:list).permit(:name, :project_id)
     end
 
   end

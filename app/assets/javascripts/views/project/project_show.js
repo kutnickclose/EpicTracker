@@ -17,6 +17,7 @@ window.Epictracker.Views.ProjectShow = Backbone.CompositeView.extend({
 		this.$el.html(content);
 		
 		this.renderLists();
+		
 		return this	;
 	},
 	
