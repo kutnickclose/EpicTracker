@@ -2,6 +2,7 @@ window.Epictracker.Views.ProjectsIndex = Backbone.View.extend({
 	template: JST["projects/index"],
 	
 	initialize : function () {
+		this.collection.fetch()
 		this.listenTo(this.collection, "all", this.render)
 	},
 	

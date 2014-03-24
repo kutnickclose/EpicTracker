@@ -18,3 +18,16 @@
 ul {
   min-height: 12px;
 }
+
+$navbar-default-bg: #256188;
+$navbar-default-color: #FFF;
+$navbar-default-link-color: #FFF;
+$navbar-default-link-active-color: #FFF;
+$navbar-default-link-active-bg: #FFF;
+$navbar-default-link-disabled-color: #FFF;
+$nav-disabled-link-color: #FFF;
+$brand-primary: #256188;
+$navbar-height: 35px;
+$navbar-border-radius: 0px;
+
+@import "bootstrap";

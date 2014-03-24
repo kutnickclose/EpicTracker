@@ -13,9 +13,9 @@
 //= require jquery
 //= require jquery_ujs
 //= require jquery.ui.all
-//= require turbolinks
 //= require underscore
 //= require backbone
+//= require bootstrap
 //= require util
 //= require epictracker
 //= require_tree ../templates

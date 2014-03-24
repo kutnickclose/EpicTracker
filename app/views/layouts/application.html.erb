@@ -7,22 +7,29 @@
 	<%= csrf_meta_tags %>
 </head>
 <body>
-	<% if user_signed_in? %>
-	  <li>
-	  <%= link_to('Logout', destroy_user_session_path, :method => :delete) %>        
-	  </li>
-	<% else %>
-	  <li>
-	  <%= link_to('Login', new_user_session_path)  %>  
-	  </li>
-	<% end %>
-	
-	<nav>EpicTracker</nav>
-	
+	<nav class="navbar navbar-default" role="navigation">
+		<a class="navbar-brand" href="#"><span class="glyphicon glyphicon-flash"></span>epictracker</a>
+		<ul class="nav nav-pills navbar-right">
+		  <li class="active"><%= link_to("Projects", "#")%></li>
+			<% if user_signed_in? %>
+			  <li class="active">
+			  <%= link_to("Sign Out", destroy_user_session_path, :method => :delete) %>        
+			  </li>
+			<% else %>
+			  <li class="active">
+			  <%= link_to('Sign In', new_user_session_path)  %>  
+			  </li>
+			<% end %>
+		</ul>
+	</nav>
+	<% if notice || alert %>
 	<p class="notice"><%= notice %></p>
 	<p class="alert"><%= alert %></p>
-
+	<% end %>
+	
+  <div class="container">
 	<%= yield %>
+	</div>
 
 </body>
 </html>
