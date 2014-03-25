@@ -15,10 +15,96 @@
 	display: none;
 }
 
-ul {
-  min-height: 12px;
+.listName {
+	float: left;
+	width: 30%;
+	border-style: solid;
+	border-width: 1px;
+	border-radius: 10px;
+	min-width: 250px;
+	height: 1000px;
+	margin: 2px;
+	background-color: lightgray;
 }
 
+html,body {
+	height: 100%;
+}
+
+#lists {
+		margin-left: 2.5%;
+		margin-right: 2.5%;
+}
+
+ul {
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+}
+
+.storyShow {
+	min-height: 30px;
+	height: 100%;
+	background-color: #eeeeee;
+	margin-top: 1px;
+}
+
+.subheader {
+	background-color: #eeeeee;
+	padding-left: 3%;
+	padding-right: 3%;
+	padding-bottom: 1%;
+}
+
+.thisisalist {
+	background-color: gray;
+	padding: 5px;
+	margin-bottom: 0%;
+	margin-top: 0%;
+	border-top-left-radius: 9px;
+	border-top-right-radius: 9px;
+}
+
+.frmPreselect {
+	margin: 1px;
+}
+
+div.icebox li {
+	background-color: #6BB9F0;
+}
+
+.btn {
+	margin-right: 1px;
+	margin-top: 1px;
+}
+
+.btn-xs {
+	margin-top: 4px;
+}
+div.listName ul {
+	padding: 0;
+	margin: 0;
+}
+
+span.storyText {
+	/* essential */
+//	display: block;
+//	text-overflow: ellipsis;
+	width: 100px;
+	
+	/* for good looks */
+}
+
+
+//.glyphicon {
+//	padding-top: 4px;
+//}
+
+$line-height-base: 1;
+//$btn-default-color: gray;
+//$btn-default-bg: gray;
+$btn-default-border: gray;
+$navbar-margin-bottom: 0px;
 $navbar-default-bg: #256188;
 $navbar-default-color: #FFF;
 $navbar-default-link-color: #FFF;

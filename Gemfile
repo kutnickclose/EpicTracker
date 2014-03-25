@@ -16,6 +16,8 @@ gem 'omniauth'
 gem 'omniauth-google-oauth2'
 gem 'uuidtools'
 gem 'figaro'
+gem "paperclip"
+gem "aws-sdk"
 
 group :doc do
   gem 'sdoc', require: false

@@ -39,6 +39,12 @@ module Api
 #     this.add(current);
   
     def update
+      @project = current_user.projects.find(params[:id])
+      if @project.update_attributes(project_params)
+        render partial: "api/projects/project", locals: { project: @project }
+      else
+        render json: {errors: @projects.errors.full_messages}, status: 422
+      end
     end
   
     def edit
@@ -54,7 +60,7 @@ module Api
   
     private
     def project_params
-      params.require(:project).permit(:name)
+      params.require(:project).permit(:name, :velocity)
     end
   
   

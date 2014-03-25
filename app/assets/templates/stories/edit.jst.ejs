@@ -11,7 +11,7 @@
 	<label>Story Type</label>
 	
 	<select name=story["story_type"] class="storyType" id="story_type">
-		<option value="feature" <%= (story.get('story_type') === 'feature') ? 'selected' : '' %>> &#9733 feature</option>
+		<option value="feature" <%= (story.get('story_type') === 'feature') ? 'selected' : '' %>> <span class="glyphicon glyphicon-star-empty"></span>feature</option>
 		<option value="bug" <%= (story.get('story_type') === 'bug') ? 'selected' : '' %>> &#8416 bug</option>
 		<option value="chore" <%= (story.get('story_type') === 'chore') ? 'selected' : '' %>> &#9881 chore</option>
 	</select>
@@ -57,7 +57,6 @@
 		<option value="accepted" <%= (story.get('state') === "accepted" ) ? 'selected' : '' %>>accepted</option>
 	</select>
 	
-	MUST CHANGE UPDATE METHOD
 	<br>
 	
 	<label>

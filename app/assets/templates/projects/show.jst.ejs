@@ -1,10 +1,21 @@
-<div class="row">
-<h2><%= project.escape("name") %></h2>
+<div class="subheader">
+	<div class="row">
+	<h2><%= project.escape("name") %><span class="pull-right">velocity
+	    <span class="velocity"><%= project.escape('velocity') %></span></span>
+	</h2>
+			<form class="editVelocity hidden form-inline" >
+			  <button class="resetVelocity btn-primary btn-xs pull-right">save</button>
+				<input type=text name=project["velocity"] value="<%= project.escape('velocity') %>" class="pull-right col-xs-1 newVel">
+			</form>
+	</div>
+
+	<div class="row">
+	<button class="currentButton btn btn-default">current</button>
+	<button class="backlogButton btn btn-default">backlog</button>
+	<button class="iceboxButton btn btn-default">icebox</button>
+	<button class="addStory pull-right btn btn-primary">Add Story</button>
+	</div>
 </div>
 
-<div class="row">
-<button class="addStory">Add Story</button>
-</div>
-
-<div id="lists">
-</div>
+	<div id="lists" class="row">
+	</div> 

@@ -1,10 +1,13 @@
 window.Epictracker.Views.ListShow = Backbone.CompositeView.extend({
 	template: JST["lists/show"],
 	
-	initialize: function (){
+	initialize: function (option){
+		var that = this
+		this.project = option.project;
 		this.model.stories().fetch();
 		this.listenTo(this.model, "add remove sync", this.render)
 		this.listenTo(this.model.stories(), "add remove sync", this.render)
+		// this.listenTo(this.project.lists(), "add remove sync", this.render)
 	},
 	
 	events: {
@@ -25,9 +28,6 @@ window.Epictracker.Views.ListShow = Backbone.CompositeView.extend({
 			opacity: 0.3,
 			dropOnEmpty: true,
 			connectWith: ".stories"
-				// 			  stop: function (event) {
-				// 		that._rerank($(event.target));
-				// }
 		});
 		
 	
@@ -36,6 +36,18 @@ window.Epictracker.Views.ListShow = Backbone.CompositeView.extend({
 	
 	renderStories: function () {
 		this.model.stories().sort();
+		var that = this
+		
+		if (this.model.get('name') === "current") {
+			var sum = 0
+			this.model.stories().each(function(story) {
+				sum += parseInt(story.get("points"))
+			})
+			if (sum > that.project.get('velocity')) {
+				that.moveToBacklog()
+			}
+		}
+
 		this.model.stories().each(function(story) {
 			var view = new Epictracker.Views.StoryShow({
 				model: story,
@@ -44,6 +56,26 @@ window.Epictracker.Views.ListShow = Backbone.CompositeView.extend({
 			})
 			this.addSubView('.stories', view.render());
 		}, this);
+	},
+	
+	moveToBacklog: function () {
+		var that = this
+		this.model.stories().sort();
+		var storyToMove = this.model.stories().last()
+		var backlog_id = parseInt(this.model.stories().last().get('list_id')) - 1
+		storyToMove.set({
+			list_id: backlog_id
+		})
+		storyToMove.save()
+		var sum = 0
+		this.model.stories().remove(storyToMove)
+		this.project.lists().get(backlog_id).stories().add(storyToMove)
+		// this.model.stories().each(function(story) {
+		// 	sum += parseInt(story.get("points"))
+		// })
+		// if (sum > that.project.get('velocity')) {
+		// 	that.moveToBacklog()
+		// }
 	},
 	
 	//   _rerank: function ($ul) {
@@ -71,37 +103,38 @@ window.Epictracker.Views.ListShow = Backbone.CompositeView.extend({
 	
 	_rerank: function (event, ui) {
 	     var that = this;
-	     //find previous element's order, or 0
 	     var $story = $(ui.item).find("li");
 			 var $storydiv = $(ui.item)
 	     var next_order = $storydiv.next("div").find("li").data("rank");
 	     var prev_order = $storydiv.prev("div").find("li").data("rank");
 			 
-	     //find next element's order, or prev_element + 2
-	     // turn your old order into the average of the two.
 	    var updated_rank = this._calculatePosition(prev_order, next_order);
 			
-			var oldListId = $story.data("list-id")
 	    var storyId = $story.data("id");
 			var projectID = this.model.get('project_id')
 
-			
+			var oldListId = $story.data("list-id")
 	    var updatedStoryListId = $storydiv.parent().data("id");
-			console.log(updatedStoryListId)
+			// console.log(oldListId)
+			// console.log( updatedStoryListId)
+
 			
 	    var storyModel = this.model.stories().get(storyId);
-			console.log(this.model.stories())
-			console.log(storyId)
+			
+			
 	    storyModel.save({
 	      rank: updated_rank,
 	      list_id: updatedStoryListId },
 	      { patch: true,
 	        success: function(model){
-	           $story.data("rank", updated_rank);
-	           that.model.stories().add(model);
-	           // remove it from the old list's collection
-	           Epictracker.projects.get(projectID).lists().get(oldListId).stories().remove(model, { silent: true });
+						 $story.data("rank", updated_rank);
+						 Epictracker.projects.get(projectID).lists().get(oldListId).stories().remove(model, {silent: true});
+						 //add
+						 Epictracker.projects.get(projectID).lists().get(updatedStoryListId).stories().add(model);
+						 //delete
+						 
 	           $story.data("list-id", updatedStoryListId);
+						 // Epictracker.projects.get(projectID).lists().get(oldListId).stories().remove(model);
 	          }
 	      });
 	},
@@ -109,7 +142,7 @@ window.Epictracker.Views.ListShow = Backbone.CompositeView.extend({
   _calculatePosition: function(prevPos, nextPos){
     if(!nextPos){
       if(!prevPos){
-        return 10000000000000;
+        return 100;
       } else {
         return (prevPos + 1);
       }
