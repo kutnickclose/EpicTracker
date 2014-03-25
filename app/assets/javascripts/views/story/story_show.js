@@ -28,6 +28,7 @@ window.Epictracker.Views.StoryShow = Backbone.CompositeView.extend({
 	},
 	
 	renderEditForm: function (event) {
+		debugger
 		var editView = new Epictracker.Views.StoryEdit({
 			model: this.model,
 			list: this.list,

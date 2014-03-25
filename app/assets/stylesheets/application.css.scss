@@ -17,6 +17,7 @@
 
 .listName {
 	float: left;
+//	display: inline-block;
 	width: 30%;
 	border-style: solid;
 	border-width: 1px;
@@ -42,6 +43,7 @@ ul {
 }
 
 ul.stories {
+//	vertical-align: baseline;
 		height: 1000px;
 }
 
