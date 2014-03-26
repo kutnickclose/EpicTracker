@@ -1,0 +1,1 @@
+json.(week, :list_id, :start_date, :week_num)

@@ -14,7 +14,7 @@ module Api
       if @story.save
         render partial: "api/stories/story", locals: { story: @story }
       else
-        render json: { errors: @board.errors.full_messages }, status: 422
+        render json: { errors: @story.errors.full_messages }, status: 422
       end
     end
   

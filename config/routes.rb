@@ -7,6 +7,10 @@ Epictracker::Application.routes.draw do
       resources :lists, :only => [:index, :new, :create, :show]
     end
     
+    resources :lists do
+      resources :weeks
+    end
+    
     resources :lists, only: [] do
       resources :stories, only: [:create, :index, :destroy, :update]
     end

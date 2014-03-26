@@ -3,6 +3,18 @@ window.Epictracker.Views.StoryShow = Backbone.CompositeView.extend({
 	
 	initialize: function (options) {
 		this.list = options.list
+
+	},
+	
+	tagName: "li",
+	
+	attributes: function () {
+		return {
+			"class": "storyShow",
+			"data-rank": this.model.get('rank'),
+			"data-id": this.model.get('id'),
+			"data-list-id": this.model.get('list_id')
+		}
 	},
 	
 	events: {
@@ -28,14 +40,14 @@ window.Epictracker.Views.StoryShow = Backbone.CompositeView.extend({
 	},
 	
 	renderEditForm: function (event) {
-		debugger
 		var editView = new Epictracker.Views.StoryEdit({
 			model: this.model,
 			list: this.list,
 			collection: this.collection
 		});
 		this.$(".storyBlock").addClass("hidden")
-		this.addSubView(".storyShow", editView.render())
+		
+		this.addSubView(".storyEdit", editView.render())
 		//come back and change icebox to right element
 	},
 	

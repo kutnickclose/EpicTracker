@@ -23,7 +23,7 @@ module Api
         @list3.save
         render partial: "api/projects/project", locals: { project: @project }
       else
-        render json: {errors: @projects.errors.full_messages}, status: 422
+        render json: { errors: @projects.errors.full_messages}, status: 422
       end
     end
     

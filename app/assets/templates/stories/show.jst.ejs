@@ -1,22 +1,27 @@
-<li class="storyShow" data-rank="<%= story.get('rank') %>" data-id="<%= story.get('id') %>" data-list-id="<%= story.get('list_id') %>"><span class="storyBlock"><span class="edit">&#x25B8</span>
+
+<span class="storyEdit">
+<span class="storyBlock">
+
+<span class="edit pull-left">&#x25B8</span>
+
 <% if (story.get('story_type') === "feature") { %>
-	<span class="glyphicon glyphicon-star"></span>
+	<span class="glyphicon glyphicon-star pull-left"></span>
 <% } else if (story.get('story_type') === "bug" ) { %>
-	<span class="glyphicon glyphicon-ban-circle"></span>
+	<span class="glyphicon glyphicon-ban-circle pull-left"></span>
 <% } else { %>
-	<span class="glyphicon glyphicon-cog"></span>
+	<span class="glyphicon glyphicon-cog pull-left"></span>
 <% } %>
 
 <% if (story.get('points') === "0") { %>
-	<button class="btn btn-primary btn-xs disabled"><%='0'%></button>
+	<button class="btn btn-primary btn-xs disabled pull-left"><%='0'%></button>
 <% } else if (story.get('points') === "1" ) { %>
-	<button class="btn btn-primary btn-xs disabled"><%='1'%></button>
+	<button class="btn btn-primary btn-xs disabled pull-left"><%='1'%></button>
 <% } else if (story.get('points') === "2" ) { %>
-	<button class="btn btn-primary btn-xs disabled"><%='2'%></button>
+	<button class="btn btn-primary btn-xs disabled pull-left"><%='2'%></button>
 <% } else if (story.get('points') === "3" ) { %>
-	<button class="btn btn-primary btn-xs disabled"><%='3'%></button>
+	<button class="btn btn-primary btn-xs disabled pull-left"><%='3'%></button>
 <% } else { %>
-	<button class="btn btn-default btn-xs disabled"><%='&nbsp; '%></button>
+	<button class="btn btn-default btn-xs disabled pull-left"><%='&nbsp; '%></button>
 <% } %>
 	 
 <span class="storyText"><%= story.escape('title') %></span>
@@ -32,19 +37,20 @@
 	<% if (story.get('state') === "unscheduled") { %>
 		<%= '' %>
 	<% } else if (story.get('state') === "unstarted" ) { %>
-		<button class="start btn btn-primary">start</button>
+		<button class="start btn btn-primary btn-xs">start</button>
 	<% } else if (story.get('state') === "started" ) { %>
-		<button class="finish btn btn-warning">finish</button>
+		<button class="finish btn btn-warning btn-xs">finish</button>
 	<% } else if (story.get('state') === "finished" ) { %>
-		<button class="deliver btn btn-warning">deliver</button>
+		<button class="deliver btn btn-warning btn-xs">deliver</button>
 	<% } else if (story.get('state') === "delivered" ) { %>
-		<button class="accept btn btn-success">accept</button> <button class="reject btn btn-danger">reject</button>
+		<button class="accept btn btn-success btn-xs">accept</button> <button class="reject btn btn-danger btn-xs">reject</button>
 	<% } else if (story.get('state') === "rejected" ) { %>
-		<button class="restart btn">restart</button>
+		<button class="restart btn btn-xs">restart</button>
 	<% } else { %>
 		<%= '' %>
 	<% } %>
 <% } %>
 </div>
 
-</span></li>
+</span>
+</span>
