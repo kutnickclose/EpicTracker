@@ -6,36 +6,57 @@ window.Epictracker.Views.ListShow = Backbone.CompositeView.extend({
 		this.project = option.project;
 		this.model.stories().fetch();
 
-		this.listenTo(this.model.weeks(), "add", this.render)
 		this.listenTo(this.model, "add remove sync", this.render)
 		this.listenTo(this.model.stories(), "add remove sync", this.render)
 		
-		//
-		// this.addCurrentWeek()
 	},
 	
 	events: {
 		"sortstop" : "_rerank"
 	},
 	
-	
-	
 	render: function () {
+		//render list
 		var content = this.template({
 			list : this.model
 		});
 		this.$el.html(content);
 
+		//render "weeks" in current and backlog
 		if (this.model.get('name') === "current") {
 			this.renderCurrentFirstWeek()
 		} else if (this.model.get('name') === "backlog") { 
 			this.renderBacklogFirstWeek()
+		}
+		
+		//hide done
+		if (this.model.get('name') === "done") {
+			this.$('.done').addClass("hidden")
 		}
 
 		this.renderStories();
 		this.makeItSortable()
 		
 		return this
+	},
+	
+	renderStories: function () {
+		this.model.stories().sort();
+		var that = this
+
+		if (that.model.get('name') === "backlog") {
+			that.renderBacklogWeeks();
+		} else {
+			this.model.stories().each(function(story) {
+				that.addStory(story);
+			})
+		}
+		
+		// this.moveStoriesFromBacklogToCurrent()
+		
+		//move stories to backlog if points this week > velocity
+		this.moveStoriesFromCurrentToBacklog()
+
 	},
 	
 	renderBacklogFirstWeek: function () {
@@ -47,7 +68,7 @@ window.Epictracker.Views.ListShow = Backbone.CompositeView.extend({
 		diffDays = Math.round(Math.abs((today_date.getTime() - start_date.getTime())/(oneDay)));
 		
 		var week = Math.floor(diffDays / 7) + 2
-		this.$(".stories").prepend("week " + week + " | " + monday)
+		this.$(".stories").prepend("<p class='weekShow'>week " + week + " | " + monday + "</p>")
 	},
 	
 	renderCurrentFirstWeek: function () {
@@ -59,33 +80,15 @@ window.Epictracker.Views.ListShow = Backbone.CompositeView.extend({
 		diffDays = Math.round(Math.abs((today_date.getTime() - start_date.getTime())/(oneDay)));
 		
 		var week = Math.floor(diffDays / 7) + 1
-		this.$(".stories").prepend("week " + week + " | " + monday)
+		this.$(".stories").prepend("<p class='weekShow'>week " + week + " | " + monday + "</p>")
 	},
 	
 	convertTime: function (text) {
 			return new Date(Date.parse(text.replace(/( +)/, ' UTC$1')));
 	},
 	
-	renderStories: function () {
-		this.model.stories().sort();
-		var that = this
-		
-		//move stories to backlog if points this week > velocity
-		this.moveStoriesFromCurrentToBacklog()
-
-    //set vars for backlog week rendering
-		if (that.model.get('name') === "backlog") {
-			console.log("hi");
-			that.renderBacklogWeeks();
-		} else {
-			this.model.stories().each(function(story) {
-				that.addStory(story);
-			})
-		}
-
-	},
-	
 	renderBacklogWeeks: function () {
+		//set up necessary variables for week calculation
 		var that = this
 	  var mondayNum = 2
 	  var monday = this.getDate(mondayNum)
@@ -94,18 +97,23 @@ window.Epictracker.Views.ListShow = Backbone.CompositeView.extend({
 		var oneDay = 24*60*60*1000; // hours*minutes*seconds*milliseconds
 		diffDays = Math.round(Math.abs((today_date.getTime() - start_date.getTime())/(oneDay)));
 		var week = Math.floor(diffDays / 7) + 3
-		var sum = 0
-		var ten = 0
 		
+		var sum = 0
+		
+		//add a new week after a "velocity" amount of points
 		this.model.stories().each(function(story) {
-			//render weeks in backlog
-		  sum += parseInt(story.get('points'))
+			if (story.get('points') === "unestimated") {
+				sum += 0
+			} else {
+				sum += parseInt(story.get('points'))
+			}
+			
+			console.log("hello")
 			if (sum > that.project.get('velocity')) {
 				that.addStory(story);
 				var selector = ".story" + story.get("id")
-				that.$(selector).before( "</ul><p>week " + week + " | " + monday + "</p><ul>")  // that.renderNewBacklogWeek(1 + Math.floor((sum +10*ten)/10))
+				that.$(selector).before( "</ul><p class='weekShow'>week " + week + " | " + monday + "</p><ul>")
 				sum = parseInt(story.get('points'))
-				ten += 1
 				week += 1
 				mondayNum += 1
 				monday = that.getDate(mondayNum)
@@ -122,25 +130,81 @@ window.Epictracker.Views.ListShow = Backbone.CompositeView.extend({
 		var view = new Epictracker.Views.StoryShow({
 			model: story,
 			list: this.model,
-			collection: this.model.stories()
+			collection: this.model.stories(),
+			project: this.project
 		})
 		this.addSubView('.stories', view.render())
 	},
 	
-
+	moveStoriesFromBacklogToCurrent: function () {
+		var that = this
+		if (this.model.get('name') === "backlog") {
+			var sum = 0
+			if (this.model.stories().first()) {
+				var current_id = parseInt(that.model.stories().first().get('list_id')) + 1
+				this.project.lists().get(current_id).stories().each(function(story) {
+					sum += parseInt(story.get("points"))
+				})
+				if (sum < that.project.get('velocity')) {
+					that.moveToCurrent()
+				}
+			}
+		};
+	},
 	
-	moveToBacklog: function () {
+	moveToCurrent: function () {
 		var that = this
 		this.model.stories().sort();
-		var storyToMove = this.model.stories().last()
-		var backlog_id = parseInt(this.model.stories().last().get('list_id')) - 1
+		var storyToMove = this.model.stories().first()
+		var current_id = parseInt(this.model.stories().first().get('list_id')) + 1
 		storyToMove.set({
-			list_id: backlog_id
+			list_id: current_id
 		})
 		storyToMove.save()
 		var sum = 0
 		this.model.stories().remove(storyToMove)
-		this.project.lists().get(backlog_id).stories().add(storyToMove)
+		this.project.lists().get(current_id).stories().add(storyToMove)
+	},
+	
+	moveStoriesFromCurrentToBacklog: function () {
+		var that = this
+		if (this.model.get('name') === "current") {
+			var sum = 0
+			this.model.stories().each(function(story) {	
+				if (story.get('points') === "unestimated") {
+					sum += 0
+				} else {
+					sum += parseInt(story.get('points'))
+				}
+			})
+			if (sum > that.project.get('velocity')) {
+				that.moveToBacklog()
+			}
+		};
+	},
+	
+	moveToBacklog: function () {
+		var that = this
+		this.model.stories().sort();
+		var storiesToMove = new Array();
+		this.model.stories().each(function(story) {
+			if (story.get('state') === "unstarted" || story.get('state') === "unscheduled") {
+				storiesToMove.push(story)
+			}
+		});
+		
+		var storyToMove = storiesToMove[storiesToMove.length-1]
+		if (storyToMove) {
+			var backlog_id = parseInt(this.model.stories().last().get('list_id')) - 1
+			storyToMove.set({
+				list_id: backlog_id
+			})
+			storyToMove.save()
+			var sum = 0
+			this.model.stories().remove(storyToMove)
+			this.project.lists().get(backlog_id).stories().add(storyToMove)
+		}
+
 		
 		// it already automatically moves all the stories off so don't need to recursively do it????
 				// this.model.stories().each(function(story) {
@@ -172,7 +236,7 @@ window.Epictracker.Views.ListShow = Backbone.CompositeView.extend({
 	      { patch: true,
 	        success: function(model){
 						 $story.data("rank", updated_rank);
-						 Epictracker.projects.get(projectID).lists().get(oldListId).stories().remove(model, {silent: true});
+						 Epictracker.projects.get(projectID).lists().get(oldListId).stories().remove(model);
 						 Epictracker.projects.get(projectID).lists().get(updatedStoryListId).stories().add(model);
 	           $story.data("list-id", updatedStoryListId);
 	          }
@@ -192,18 +256,6 @@ window.Epictracker.Views.ListShow = Backbone.CompositeView.extend({
     return (nextPos + prevPos) / 2;
   },
 	
-	moveStoriesFromCurrentToBacklog: function () {
-		var that = this
-		if (this.model.get('name') === "current") {
-			var sum = 0
-			this.model.stories().each(function(story) {
-				sum += parseInt(story.get("points"))
-			})
-			if (sum > that.project.get('velocity')) {
-				that.moveToBacklog()
-			}
-		};
-	},
 	
 	makeItSortable: function () {
 		var that = this
@@ -212,7 +264,7 @@ window.Epictracker.Views.ListShow = Backbone.CompositeView.extend({
 			opacity: 0.3,
 			dropOnEmpty: true,
 			connectWith: ".stories",
-			items: "li:not(.weekShow)"
+			items: "li:not(.accepted)"
 		});
 	},
 	

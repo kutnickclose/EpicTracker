@@ -1,14 +1,14 @@
 
 <h1> Your Projects </h1>
+<form class="form-inline" role="form">
+	<input type="text" name="project[name]" class="add-project-text form-control col-xs-3">
+	<button class="add-project btn btn-primary btn-md">Add Project</button>
+</form>
 
+<div class="jumbotron">
 <% projects.each(function(project) { %>
   <h2><a href="#/projects/<%= project.id %>"><%= project.escape('name') %></a></h2>
 <% }) %>
+</div>
 
-<input type="text" name="project[name]" class="add-project-text">
-
-
-
-
-<button class="add-project">Add Project</button>
 

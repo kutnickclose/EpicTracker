@@ -2,6 +2,7 @@ window.Epictracker.Views.ProjectShow = Backbone.CompositeView.extend({
 	template: JST["projects/show"],
 	
 	initialize : function () {
+		var that=this
 		this.model.lists().fetch();
 		this.listenTo(this.model, "change:velocity", this.render)
 		this.listenTo(this.model.lists(), "add remove sync", this.render)
@@ -12,8 +13,9 @@ window.Epictracker.Views.ProjectShow = Backbone.CompositeView.extend({
 		"click .currentButton" : "toggleCurrent",
 		"click .backlogButton" : "toggleBacklog",
 		"click .iceboxButton" : "toggleIcebox",
-		"dblclick .velocity" : "changeVelocity",
-		"click .resetVelocity" : "resetVelocity"
+		"click .velocity" : "changeVelocity",
+		"click .resetVelocity" : "resetVelocity",
+		"click .doneButton" : "toggleDone"
 	},
 	
 	render: function () {
@@ -58,20 +60,32 @@ window.Epictracker.Views.ProjectShow = Backbone.CompositeView.extend({
 		return list
 	},
 	
+	toggleDone: function() {
+		$(".done").toggleClass("hidden");
+		$(".doneButton").toggleClass("btn-link");
+		$(".doneButton").toggleClass("btn-default");
+	},
+	
 	toggleCurrent: function() {
-		$(".current").toggleClass("hidden")
+		$(".current").toggleClass("hidden");
+		$(".currentButton").toggleClass("btn-link");
+		$(".currentButton").toggleClass("btn-default");
 	},
 	
 	toggleBacklog: function() {
-		$(".backlog").toggleClass("hidden")
+		$(".backlog").toggleClass("hidden");
+		$(".currentButton").toggleClass("btn-link");
+		$(".currentButton").toggleClass("btn-default");
 	},
 	
 	toggleIcebox: function() {
-		$(".icebox").toggleClass("hidden")
+		$(".icebox").toggleClass("hidden");
+		$(".currentButton").toggleClass("btn-link");
+		$(".currentButton").toggleClass("btn-default");
 	},
 	
 	changeVelocity : function () {
-		$(".velocity").toggleClass("hidden")
+		$(".velocityNum").toggleClass("hidden")
 		$(".editVelocity").toggleClass("hidden")
 	},
 	

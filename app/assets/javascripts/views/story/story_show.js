@@ -2,7 +2,8 @@ window.Epictracker.Views.StoryShow = Backbone.CompositeView.extend({
 	template: JST["stories/show"],
 	
 	initialize: function (options) {
-		this.list = options.list
+		this.list = options.list;
+		this.project = options.project;
 
 	},
 	
@@ -95,10 +96,28 @@ window.Epictracker.Views.StoryShow = Backbone.CompositeView.extend({
 	},
 	
 	start: function () {
+		if (this.list.get("name") === "icebox") {
+			var id = 2
+		} else if (this.list.get("name") === "backlog") {
+			var id = 1
+		} else {
+			var id = 0
+		}
+		var projectID = this.project.get('id') 
+		var oldListId = this.list.get('id')
+		var updatedStoryListId = this.list.get('id') + id
+		var currentStoriesCollection = Epictracker.projects.get(projectID).lists().get(updatedStoryListId).stories()
+		
+		console.log(currentStoriesCollection.last())
 		this.model.set({
-			state: "started"
+			state: "started",
+			list_id: this.list.get('id') + id,
+			rank: currentStoriesCollection.last().get('rank') + 1
 		});
-		this.model.save()
+		this.model.save();
+
+	  Epictracker.projects.get(projectID).lists().get(oldListId).stories().remove(this.model);
+	  Epictracker.projects.get(projectID).lists().get(updatedStoryListId).stories().add(this.model);
 
 				// 
 		// this.$el.attr("class", "storyShow started")
@@ -119,11 +138,34 @@ window.Epictracker.Views.StoryShow = Backbone.CompositeView.extend({
 	},
 	
 	accept: function () {
+		var rank = this.rankUponAcceptance()
 		this.model.set({
-			state: "accepted"
+			state: "accepted",
+			rank: rank
 		});
 		this.model.save()
 	},
+	
+	rankUponAcceptance: function () {
+		var doneStories = new Array();
+		
+		this.collection.each(function(story) {
+			if (story.get('state') === "accepted") {
+				doneStories.push(story)
+			}
+		});
+		
+		if (doneStories[0]) {
+			console.log(parseFloat(doneStories[doneStories.length-1].get('rank')))
+			return parseFloat(doneStories[doneStories.length-1].get('rank')) + 0.01
+		} else if (this.collection[0]){
+			return parseFloat(this.collection[0].get('rank')) - 0.01
+		} else {
+			return 1
+		};
+	
+	},
+	
 	
 	reject: function () {
 		this.model.set({

@@ -6,12 +6,10 @@ window.Epictracker.Views.StoryEdit = Backbone.View.extend({
 	template: JST["stories/edit"],
 	
 	render: function () {
-		console.log("made it to story_edit")
 		content = this.template({
 			story: this.model	
 		});
 		this.$el.html(content)
-		console.log("here")
 		return this
 	},
 	

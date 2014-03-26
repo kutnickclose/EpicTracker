@@ -1,7 +1,7 @@
 <div class="subheader">
 	<div class="row">
-	<h2><%= project.escape("name") %><span class="pull-right">velocity
-	    <span class="velocity"><%= project.escape('velocity') %></span></span>
+	<h2><%= project.escape("name") %><span class="pull-right velocity ">velocity▾
+	    <span class="velocityNum"><%= project.escape('velocity') %></span></span>
 	</h2>
 			<form class="editVelocity hidden form-inline" >
 			  <button class="resetVelocity btn-primary btn-xs pull-right">save</button>
@@ -10,6 +10,7 @@
 	</div>
 
 	<div class="row">
+	<button class="doneButton btn btn-link">done</button>
 	<button class="currentButton btn btn-default">current</button>
 	<button class="backlogButton btn btn-default">backlog</button>
 	<button class="iceboxButton btn btn-default">icebox</button>

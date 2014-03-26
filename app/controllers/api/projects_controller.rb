@@ -18,9 +18,11 @@ module Api
         @list1 = List.new(name: "icebox", project_id: @project.id)
         @list2 = List.new(name: "backlog", project_id: @project.id)
         @list3 = List.new(name: "current", project_id: @project.id)
+        @list4 = List.new(name: "done", project_id: @project.id)
         @list1.save
         @list2.save
         @list3.save
+        @list4.save
         render partial: "api/projects/project", locals: { project: @project }
       else
         render json: { errors: @projects.errors.full_messages}, status: 422
