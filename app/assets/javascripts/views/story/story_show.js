@@ -10,7 +10,7 @@ window.Epictracker.Views.StoryShow = Backbone.CompositeView.extend({
 	
 	attributes: function () {
 		return {
-			"class": "storyShow",
+			"class": "storyShow " + "story" + this.model.get('id'),
 			"data-rank": this.model.get('rank'),
 			"data-id": this.model.get('id'),
 			"data-list-id": this.model.get('list_id')
@@ -36,8 +36,19 @@ window.Epictracker.Views.StoryShow = Backbone.CompositeView.extend({
 			story: this.model
 		});
 		this.$el.html(content);
+		this.setStoryColors()
 		return this;
 	},
+	
+	setStoryColors: function () {
+		if (this.model.get("state") === "started" || this.model.get("state") === "finished" || this.model.get("state") === "delivered") {
+			this.$el.addClass("started")
+		} else if (this.model.get("state") === "accepted") {
+			this.$el.addClass("accepted")
+		}
+	},
+	
+	
 	
 	renderEditForm: function (event) {
 		var editView = new Epictracker.Views.StoryEdit({
@@ -88,6 +99,9 @@ window.Epictracker.Views.StoryShow = Backbone.CompositeView.extend({
 			state: "started"
 		});
 		this.model.save()
+
+				// 
+		// this.$el.attr("class", "storyShow started")
 	},
 	
 	finish: function () {

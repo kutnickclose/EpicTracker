@@ -28,6 +28,8 @@
 	background-color: lightgray;
 }
 
+
+
 html,body {
 	height: 100%;
 }
@@ -111,6 +113,13 @@ span.storyText {
 	/* for good looks */
 }
 
+.started {
+	background-color: #f3f3d1;
+}
+
+.accepted {
+	background-color: #daebcf;
+}
 
 //.glyphicon {
 //	padding-top: 4px;

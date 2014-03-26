@@ -5,7 +5,7 @@ window.Epictracker.Views.ListShow = Backbone.CompositeView.extend({
 		var that = this
 		this.project = option.project;
 		this.model.stories().fetch();
-		this.createNewWeekIfNecessary()
+
 		this.listenTo(this.model.weeks(), "add", this.render)
 		this.listenTo(this.model, "add remove sync", this.render)
 		this.listenTo(this.model.stories(), "add remove sync", this.render)
@@ -18,21 +18,52 @@ window.Epictracker.Views.ListShow = Backbone.CompositeView.extend({
 		"sortstop" : "_rerank"
 	},
 	
+	
+	
 	render: function () {
 		var content = this.template({
 			list : this.model
 		});
 		this.$el.html(content);
-		if (this.model.get('name') === "current"){
-			this.renderCurrentWeek()	
+
+		if (this.model.get('name') === "current") {
+			this.renderCurrentFirstWeek()
+		} else if (this.model.get('name') === "backlog") { 
+			this.renderBacklogFirstWeek()
 		}
-		if (this.model.get('name') === "backlog"){
-			this.renderBacklogWeeks()	
-		}
+
 		this.renderStories();
 		this.makeItSortable()
 		
 		return this
+	},
+	
+	renderBacklogFirstWeek: function () {
+		var monday = this.getDate(1)
+		var start_date = this.convertTime(this.project.get("created_at"))
+		var today_date = new Date
+
+		var oneDay = 24*60*60*1000; // hours*minutes*seconds*milliseconds
+		diffDays = Math.round(Math.abs((today_date.getTime() - start_date.getTime())/(oneDay)));
+		
+		var week = Math.floor(diffDays / 7) + 2
+		this.$(".stories").prepend("week " + week + " | " + monday)
+	},
+	
+	renderCurrentFirstWeek: function () {
+		var monday = this.getDate(0)
+		var start_date = this.convertTime(this.project.get("created_at"))
+		var today_date = new Date
+
+		var oneDay = 24*60*60*1000; // hours*minutes*seconds*milliseconds
+		diffDays = Math.round(Math.abs((today_date.getTime() - start_date.getTime())/(oneDay)));
+		
+		var week = Math.floor(diffDays / 7) + 1
+		this.$(".stories").prepend("week " + week + " | " + monday)
+	},
+	
+	convertTime: function (text) {
+			return new Date(Date.parse(text.replace(/( +)/, ' UTC$1')));
 	},
 	
 	renderStories: function () {
@@ -41,42 +72,51 @@ window.Epictracker.Views.ListShow = Backbone.CompositeView.extend({
 		
 		//move stories to backlog if points this week > velocity
 		this.moveStoriesFromCurrentToBacklog()
-		
 
-		// var sum = 0
-		// var ten = 0
-		this.model.stories().each(function(story) {
-			that.addStory(story)
-			// sum += parseInt(story.get('points'))
-			// if (sum > that.project.get('velocity')) {
-			// 	// that.renderNewBacklogWeek(1 + Math.floor((sum +10*ten)/10))
-			// 	that.addStory(story);
-			// 	sum = 0
-			// 	ten += 1
-			// } else {
-			//   that.addStory(story);	
-			// }
-		});
-	},
-	
-	renderNewBacklogWeek: function (date) {
-		var that = this;
-		var backlogWeek = this.model.weeks().findWhere({start_date: that.getDate(date)})
-		if (!backlogWeek) {
-			var backlogWeek = new Epictracker.Models.Week({
-				list_id: that.model.id,
-				week_num: that.model.weeks().length + 2,
-				start_date: that.getDate(date)
+    //set vars for backlog week rendering
+		if (that.model.get('name') === "backlog") {
+			console.log("hi");
+			that.renderBacklogWeeks();
+		} else {
+			this.model.stories().each(function(story) {
+				that.addStory(story);
 			})
-		  backlogWeek.save()
-		  that.model.weeks().add(backlogWeek)
 		}
-		var view = new Epictracker.Views.WeekShow({
-			model: backlogWeek
-		});
-		that.addSubView('.storyShow', view.render());
-	
+
 	},
+	
+	renderBacklogWeeks: function () {
+		var that = this
+	  var mondayNum = 2
+	  var monday = this.getDate(mondayNum)
+		var start_date = this.convertTime(this.project.get("created_at"))
+		var today_date = new Date
+		var oneDay = 24*60*60*1000; // hours*minutes*seconds*milliseconds
+		diffDays = Math.round(Math.abs((today_date.getTime() - start_date.getTime())/(oneDay)));
+		var week = Math.floor(diffDays / 7) + 3
+		var sum = 0
+		var ten = 0
+		
+		this.model.stories().each(function(story) {
+			//render weeks in backlog
+		  sum += parseInt(story.get('points'))
+			if (sum > that.project.get('velocity')) {
+				that.addStory(story);
+				var selector = ".story" + story.get("id")
+				that.$(selector).before( "</ul><p>week " + week + " | " + monday + "</p><ul>")  // that.renderNewBacklogWeek(1 + Math.floor((sum +10*ten)/10))
+				sum = parseInt(story.get('points'))
+				ten += 1
+				week += 1
+				mondayNum += 1
+				monday = that.getDate(mondayNum)
+			} else {
+			  that.addStory(story);	
+			}
+		});
+		
+	},
+	
+
 	
 	addStory: function (story) {
 		var view = new Epictracker.Views.StoryShow({
@@ -87,71 +127,7 @@ window.Epictracker.Views.ListShow = Backbone.CompositeView.extend({
 		this.addSubView('.stories', view.render())
 	},
 	
-	createNewWeekIfNecessary: function () {
-		var that = this
-		if (that.model.get('name') === "current") {
-			this.model.weeks().fetch({
-				success: function () {
-					if (that.model.weeks().length === 0) {
-						that._weekModel = new Epictracker.Models.Week({
-							list_id: that.model.id,
-							week_num: that.model.weeks().length + 1,
-							start_date: that.getDate(0)
-						})
-					  that._weekModel.save()
-					  that.model.weeks().add(that._weekModel)
-				  };
-			  }
-			});
-		}
-		if (that.model.get('name') === "backlog") {
-			this.model.weeks().fetch({
-				success: function () {
-					if (that.model.weeks().length === 0) {
-						that._weekModel1 = new Epictracker.Models.Week({
-							list_id: that.model.id,
-							week_num: that.model.weeks().length + 2,
-							start_date: that.getDate(1)
-						})
-					  that._weekModel1.save()
-					  that.model.weeks().add(that._weekModel1)
-				  };
-			  }
-			});
-		}
-	},
-	
-	// addCurrentWeek: function () {
-	// 	var that=this		
-	// 	this.model.weeks().fetch({
-	// 		success: function () {
-	// 			if (that.model.get('name') === "current") {
-	// 				that.renderCurrentWeek();
-	// 			}
-	// 		}
-	// 	});
-	// },
-	
-	renderCurrentWeek: function() {
-		var that=this;
-		if (this.model.weeks().first()) {
-			var view = new Epictracker.Views.WeekShow({
-				model: that.model.weeks().first()
-			});
-			that.prependSubView('.stories', view.render());
-		}
-	},
-	
-	renderBacklogWeeks: function () {
-		var that = this;
-		if (this.model.weeks().findWhere({start_date: that.getDate(1)})) {
-			var view = new Epictracker.Views.WeekShow({
-				model: that.model.weeks().first()
-			});
-			that.prependSubView('.stories', view.render());
-		}
 
-	},
 	
 	moveToBacklog: function () {
 		var that = this
