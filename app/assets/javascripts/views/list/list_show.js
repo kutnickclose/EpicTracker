@@ -107,8 +107,6 @@ window.Epictracker.Views.ListShow = Backbone.CompositeView.extend({
 			} else {
 				sum += parseInt(story.get('points'))
 			}
-			
-			console.log("hello")
 			if (sum > that.project.get('velocity')) {
 				that.addStory(story);
 				var selector = ".story" + story.get("id")

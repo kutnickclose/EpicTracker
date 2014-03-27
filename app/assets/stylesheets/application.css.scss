@@ -124,10 +124,20 @@ span.storyText {
 	/* essential */
   display: inline-block;
 //	text-overflow: ellipsis;
-	width: 150px;
+	width: 145px;
 	word-wrap: break-word;
+	margin-top: 5px;
+	margin-left: 2px;
 	
 	/* for good looks */
+}
+
+.projectName {
+	border: solid;
+	text-align: center;
+	float: left;
+	margin: 1%;
+	padding: 5%;
 }
 
 .started {
@@ -138,9 +148,54 @@ span.storyText {
 	background-color: #daebcf;
 }
 
-//.glyphicon {
-//	padding-top: 4px;
-//}
+.gold {
+	color: #F5AB35;
+}
+
+.bug {
+	color: #96281B;
+}
+
+.chore {
+	color: darkgray;
+}
+
+.edit, .save, .cancel {
+	margin-left: 2px;
+	margin-top: 5px;
+}
+
+.trash {
+	margin-top: -1px;
+}
+
+//story edit form
+
+.editForm {
+	padding-left: 5px;
+	background-color: #eeeeee;
+	padding-bottom: 10px;
+}
+
+.description {
+	width: 100%;
+}
+
+.inline {
+	display: inline;
+}
+
+.glyphicon {
+	margin-left: 1px;
+	margin-right: 1px;
+	margin-top: 5px;
+}
+
+//story show form
+
+.num {
+	margin-top: 3px;
+}
 
 $line-height-base: 1;
 //$btn-default-color: gray;

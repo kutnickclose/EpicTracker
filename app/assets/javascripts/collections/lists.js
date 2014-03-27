@@ -7,6 +7,10 @@ window.Epictracker.Collections.Lists = Backbone.Collection.extend({
 	
 	url: function () {
 		return this.project.url() + "/lists"
+	},
+	
+	comparator: function (list) {
+		return -list.get('id')
 	}
 	
 })

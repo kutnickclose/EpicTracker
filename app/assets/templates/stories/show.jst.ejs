@@ -5,23 +5,23 @@
 <span class="edit pull-left">&#x25B8</span>
 
 <% if (story.get('story_type') === "feature") { %>
-	<span class="glyphicon glyphicon-star pull-left"></span>
+	<span class="glyphicon glyphicon-star gold pull-left"></span>
 <% } else if (story.get('story_type') === "bug" ) { %>
-	<span class="glyphicon glyphicon-ban-circle pull-left"></span>
+	<span class="glyphicon glyphicon-ban-circle pull-left bug"></span>
 <% } else { %>
-	<span class="glyphicon glyphicon-cog pull-left"></span>
+	<span class="glyphicon glyphicon-cog pull-left chore"></span>
 <% } %>
 
 <% if (story.get('points') === "0") { %>
-	<button class="btn btn-primary btn-xs disabled pull-left"><%='0'%></button>
+	<button class="btn btn-primary btn-xs disabled pull-left num"><%='0'%></button>
 <% } else if (story.get('points') === "1" ) { %>
-	<button class="btn btn-primary btn-xs disabled pull-left"><%='1'%></button>
+	<button class="btn btn-primary btn-xs disabled pull-left num"><%='1'%></button>
 <% } else if (story.get('points') === "2" ) { %>
-	<button class="btn btn-primary btn-xs disabled pull-left"><%='2'%></button>
+	<button class="btn btn-primary btn-xs disabled pull-left num"><%='2'%></button>
 <% } else if (story.get('points') === "3" ) { %>
-	<button class="btn btn-primary btn-xs disabled pull-left"><%='3'%></button>
+	<button class="btn btn-primary btn-xs disabled pull-left num"><%='3'%></button>
 <% } else { %>
-	<button class="btn btn-default btn-xs disabled pull-left"><%='&nbsp; '%></button>
+	<button class="btn btn-default btn-xs disabled pull-left num"><%='&nbsp; '%></button>
 <% } %>
 	 
 <span class="storyText"><%= story.escape('title') %></span>

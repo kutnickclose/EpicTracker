@@ -5,9 +5,9 @@
 	<button class="add-project btn btn-primary btn-md">Add Project</button>
 </form>
 
-<div class="jumbotron">
+<div>
 <% projects.each(function(project) { %>
-  <h2><a href="#/projects/<%= project.id %>"><%= project.escape('name') %></a></h2>
+  <h2 class="projectName"><a href="#/projects/<%= project.id %>"><%= project.escape('name') %></a></h2>
 <% }) %>
 </div>
 

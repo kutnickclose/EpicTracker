@@ -5,11 +5,11 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
       oauthorize "Facebook"
   end
   
-  def google
-      oauthorize "Google"
-  end
+  # def google
+  #     oauthorize "Google"
+  # end
 
-  def google_oauth2
+  def google
       # You need to implement the method below in your model (e.g. app/models/user.rb)
       @user = User.find_for_google_oauth2(request.env["omniauth.auth"], current_user)
 
@@ -52,7 +52,7 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
                     :token => access_token['credentials']['token'], 
                     :secret => nil, 
                     :name => access_token[:info][:name], 
-                    :link => access_token[:info][:urls]["Facebook"] 
+                    :link => access_token[:info][:urls]["Google"] 
                   }
     else
       raise 'Provider #{provider} not handled'

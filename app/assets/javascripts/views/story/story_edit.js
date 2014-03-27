@@ -46,7 +46,13 @@ window.Epictracker.Views.StoryEdit = Backbone.View.extend({
 		event.preventDefault()
 		this.collection.remove(this.model)
 		this.model.destroy()
-	}
+	},
+	
+	// cancelStory: function (event) {
+	// 	event.preventDefault()
+	// 	this.$(".editform").parent().parent().find(".storyBlock").removeClass("hidden");
+	// 	this.$(".editForm").addClass("hidden");
+	// }
 	
 	
 })

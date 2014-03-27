@@ -30,6 +30,13 @@ window.Epictracker.Views.StoryShow = Backbone.CompositeView.extend({
 		"click .accept" : "accept",
 		"click .reject" : "reject",
 		"click .restart" : "restart",
+		"click .cancel" : "cancelStory"
+	},
+	
+	cancelStory: function (event) {
+		event.preventDefault()
+		this.$(".storyBlock").removeClass("hidden");
+		this.$(".editForm").addClass("hidden");
 	},
 	
 	render: function () {

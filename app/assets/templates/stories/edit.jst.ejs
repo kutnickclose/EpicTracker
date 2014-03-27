@@ -1,67 +1,91 @@
-<form id="frmPreselect" name="frmPreselect">
-	<span class="save">&#9662;</span><input type="text" name=story[title] placeholder="story title" 
-		class="storyTitle" value="<%= story.escape('title') %>">
-		<br>
-	<button class="delete">Delete</button>
-	<button class='save'>Save</button>
-	
+<form class="editForm "  name="frmPreselect">
+	<span class="save">&#9662; &nbsp;</span>
+	<br>
+	<label> Title </label>
+	<input type="text" name=story[title] placeholder="story title" class="storyTitle form-control inline" value="<%= story.escape('title') %>">
+	<button class='save btn btn-xs btn-primary'>Save</button>
+	<button class='cancel btn btn-xs btn-default'>Cancel</button>
+	<button class="delete btn btn-xs btn-default glyphicon glyphicon-trash"></button>
+	<br>
 	<br>
 
+	<div class="row">
+	<div class="col-xs-6">
 	<label>Story Type</label>
-	
-	<select name=story["story_type"] class="storyType" id="story_type">
-		<option value="feature" <%= (story.get('story_type') === 'feature') ? 'selected' : '' %>> <span class="glyphicon glyphicon-star-empty"></span>feature</option>
-		<option value="bug" <%= (story.get('story_type') === 'bug') ? 'selected' : '' %>> &#8416 bug</option>
-		<option value="chore" <%= (story.get('story_type') === 'chore') ? 'selected' : '' %>> &#9881 chore</option>
-	</select>
-	
-	<br>
-	
-	<label>Points</label>
-	<select name=story["points"] class="storyPoints">
-	  <option value="unestimated" <%= (story.get('points') === "unestimated" ) ? 'selected' : '' %>>unestimated</option>
-		<option value=0 <%= (story.get('points') === "0" ) ? 'selected' : '' %>>0</option>
-		<option value=1 <%= (story.get('points') === "1" ) ? 'selected' : '' %>>1</option>
-		<option value=2 <%= (story.get('points') === "2" ) ? 'selected' : '' %>>2</option>
-		<option value=3 <%= (story.get('points') === "3" ) ? 'selected' : '' %>>3</option>
-	</select>
-	
-	<br>
-	
-	<label> State </label>
-	<% if (story.get('state') === "unscheduled") { %>
-		<%= '' %>
-	<% } else if (story.get('state') === "unstarted" ) { %>
-		<button>start</button>
-	<% } else if (story.get('state') === "started" ) { %>
-		<button>finish</button>
-	<% } else if (story.get('state') === "finished" ) { %>
-		<button>delivered</button>
-	<% } else if (story.get('state') === "delivered" ) { %>
-		<button>accept</button> <button>reject</button>
-	<% } else if (story.get('state') === "rejected" ) { %>
-		<button>restart</button>
+	<% if (story.get('story_type') === "feature") { %>
+		<span class="glyphicon glyphicon-star gold "></span>
+	<% } else if (story.get('story_type') === "bug" ) { %>
+		<span class="glyphicon glyphicon-ban-circle  bug"></span>
 	<% } else { %>
-		<%= '' %>
+		<span class="glyphicon glyphicon-cog  chore"></span>
 	<% } %>
 
+	<select name=story["story_type"] class="storyType form-control pull-right" id="story_type">
 	
-	<select name=story["state"] class="storyState">
-	  <option value="unscheduled" <%= (story.get('state') === "unscheduled" ) ? 'selected' : '' %>>unscheduled</option>
-		<option value="unstarted" <%= (story.get('state') === "unstarted" ) ? 'selected' : '' %>>unstarted</option>
-		<option value="started" <%= (story.get('state') === "started" ) ? 'selected' : '' %>>started</option>
-		<option value="finished" <%= (story.get('state') === "finished" ) ? 'selected' : '' %>>finished</option>
-		<option value="delivered" <%= (story.get('state') === "delivered" ) ? 'selected' : '' %>>delivered</option>
-		<option value="rejected" <%= (story.get('state') === "rejected" ) ? 'selected' : '' %>>rejected</option>
-		<option value="accepted" <%= (story.get('state') === "accepted" ) ? 'selected' : '' %>>accepted</option>
+	<option value="feature" <%= (story.get('story_type') === 'feature') ? 'selected' : '' %>>feature</option>
+	<option value="bug" <%= (story.get('story_type') === 'bug') ? 'selected' : '' %>>bug</option>
+	<option value="chore" <%= (story.get('story_type') === 'chore') ? 'selected' : '' %>> chore</option>
 	</select>
+	</div>
+	</div>
 	
 	<br>
+
+
+	<div class="row">
+	<div class="col-xs-6">
+	<label>Points</label>
+	<% if (story.get('points') === "unestimated") { %>
+		<button class="setZero btn btn-primary btn-xs"><%='0'%></button>
+		<button class="setOne btn btn-primary btn-xs"><%='1'%></button>
+		<button class="setTwo btn btn-primary btn-xs"><%='2'%></button>
+		<button class="setThree btn btn-primary btn-xs"><%='3'%></button>
+	<% } %>
+	<% if (story.get('points') === "0") { %>
+		<button class="btn btn-primary btn-xs disabled"><%='0'%></button>
+	<% } else if (story.get('points') === "1" ) { %>
+		<button class="btn btn-primary btn-xs disabled"><%='1'%></button>
+	<% } else if (story.get('points') === "2" ) { %>
+		<button class="btn btn-primary btn-xs disabled"><%='2'%></button>
+	<% } else if (story.get('points') === "3" ) { %>
+		<button class="btn btn-primary btn-xs disabled"><%='3'%></button>
+	<% } else { %>
+		<button class="btn btn-default btn-xs disabled"><%='&nbsp; '%></button>
+	<% } %>
 	
-	<label>
-	  Description
-		<br>
-		<input type=text name=story["description"] class="storyDescription" value="<%= story.escape('description') %>"></textarea>
-	</label>
 	
+	<select name=story["points"] class="storyPoints form-control pull-right">
+	<option value="unestimated" <%= (story.get('points') === "unestimated" ) ? 'selected' : '' %>>unestimated</option>
+	<option value=0 <%= (story.get('points') === "0" ) ? 'selected' : '' %>>0</option>
+	<option value=1 <%= (story.get('points') === "1" ) ? 'selected' : '' %>>1</option>
+	<option value=2 <%= (story.get('points') === "2" ) ? 'selected' : '' %>>2</option>
+	<option value=3 <%= (story.get('points') === "3" ) ? 'selected' : '' %>>3</option>
+	</select>
+	</div>
+	</div>
+	
+	<br>
+
+	<div class="row">
+		<div class="col-xs-6">
+			<label> State </label>
+				<select name=story["state"] class="storyState form-control pull-right">
+				<option value="unscheduled" <%= (story.get('state') === "unscheduled" ) ? 'selected' : '' %>>unscheduled</option>
+				<option value="unstarted" <%= (story.get('state') === "unstarted" ) ? 'selected' : '' %>>unstarted</option>
+				<option value="started" <%= (story.get('state') === "started" ) ? 'selected' : '' %>>started</option>
+				<option value="finished" <%= (story.get('state') === "finished" ) ? 'selected' : '' %>>finished</option>
+				<option value="delivered" <%= (story.get('state') === "delivered" ) ? 'selected' : '' %>>delivered</option>
+				<option value="rejected" <%= (story.get('state') === "rejected" ) ? 'selected' : '' %>>rejected</option>
+				<option value="accepted" <%= (story.get('state') === "accepted" ) ? 'selected' : '' %>>accepted</option>
+				</select>
+		</div>
+	</div>
+	<br>
+
+
+	<label>Description</label>
+	<br>
+	<textarea type=text name=story["description"] class="storyDescription form-control description" rows=5>
+	<%= story.escape('description') %>
+	</textarea>
 </form>

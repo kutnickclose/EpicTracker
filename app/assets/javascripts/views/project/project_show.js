@@ -30,6 +30,7 @@ window.Epictracker.Views.ProjectShow = Backbone.CompositeView.extend({
 	},
 	
 	renderLists : function () {
+		this.model.lists().sort()
 		this.model.lists().each(function (list) {
 			var view = new Epictracker.Views.ListShow({
 				model: list,
