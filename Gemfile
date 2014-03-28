@@ -19,6 +19,7 @@ gem 'figaro'
 gem "paperclip"
 gem "aws-sdk"
 gem "thin"
+gem "filepicker-rails"
 
 group :doc do
   gem 'sdoc', require: false

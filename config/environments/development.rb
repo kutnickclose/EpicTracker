@@ -40,4 +40,7 @@ Epictracker::Application.configure do
       :secret_access_key => ENV['AWS_SECRET_ACCESS_KEY']          
     }                                                             
   } 
+  
+  config.filepicker_rails.api_key = ENV["FILE_PICKER_API_KEY"]
+  config.filepicker_rails.secret_key = ENV["FILE_PICKER_SECRET"]
 end
