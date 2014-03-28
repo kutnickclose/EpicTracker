@@ -11,8 +11,34 @@
  *= require_self
  *= require_tree .
  */
+
+
+.home {
+	margin-left: 15px;
+}
+
+.explain {
+	margin-left: 15px;
+	text-align: center;
+}
+
+.signin {
+	margin-top: 3px;
+}
+
+hr {
+    height: 12px;
+    border: 0;
+    box-shadow: inset 0 12px 12px -12px rgba(0,0,0,0.5);
+}
+
 .hidden {
 	display: none;
+}
+
+.acceptance-buttons {
+	margin-top: 10px;
+	margin-right: 10px;
 }
 
 .listName {
@@ -23,11 +49,20 @@
 	border-style: solid;
 	border-width: 1px;
 	border-radius: 10px;
-	min-width: 250px;
+	min-width: 300px;
 	margin: 2px;
 	background-color: lightgray;
 }
 
+.btn-xl {
+    padding: 50px 38px;
+    font-size: 30px;
+    border-radius: 8px;
+}
+
+img {
+	margin: 0 10%;
+}
 
 
 html,body {
@@ -36,13 +71,17 @@ html,body {
 
 #lists {
 	margin-left: 0.5%;
-	min-width: 900px;
+	min-width: 950px;
 }
 
 ul {
 	list-style-type: none;
 	margin: 0;
 	padding: 0;
+}
+
+.navbar-brand {
+	margin-top: -10px;
 }
 
 ul.stories {
@@ -105,7 +144,8 @@ div.icebox li {
 }
 
 .btn-xs {
-	margin-top: auto;
+	margin-top: 5px;
+	margin-right: 5px;
 }
 div.listName ul {
 	padding: 0;
@@ -124,7 +164,7 @@ span.storyText {
 	/* essential */
   display: inline-block;
 //	text-overflow: ellipsis;
-	width: 145px;
+	width: 47%;
 	word-wrap: break-word;
 	margin-top: 5px;
 	margin-left: 2px;

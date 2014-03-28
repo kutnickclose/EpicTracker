@@ -1,38 +1,65 @@
-
-<li class="storyShow">
-
-<form id="frmPreselect" name="frmPreselect">
-	<span class="save">&#x25B8</span><input type="text" name=story[title] placeholder="story title" class="storyTitle">
-	<button class='save'>Save</button>
-	
+<form class="editForm "  name="frmPreselect">
+	<label><span class="save">&#9662;</span> Title </label>
+	<input type="text" name=story[title] placeholder="story title" class="storyTitle form-control inline" >
+	<button class='save btn btn-xs btn-primary'>Save</button>
+	<button class='cancel btn btn-xs btn-default'>Cancel</button>
+	<button class="delete btn btn-xs btn-default glyphicon glyphicon-trash"></button>
+	<br>
 	<br>
 
+	<div class="row">
+	<div class="col-xs-6">
 	<label>Story Type</label>
-	<select name=story["story_type"] class="storyType">
-		<option value="feature">feature</option>
-		<option value="bug">bug</option>
-		<option value="chore">chore</option>
-	</select>
-	
-	<br>
-	
-	<label>Points</label>
-	<select name=story["points"] class="storyPoints">
-	  <option value="unestimated">unestimated</option>
-		<option value=0>0</option>
-		<option value=1>1</option>
-		<option value=2>2</option>
-		<option value=3>3</option>
-	</select>
-	
-	<br>
-	
-	<label>
-	  Description
-		<br>
-		<input type=text name=story["description"] class="storyDescription">
-	</label>
-	
-</form>
 
-</li>
+	<select name=story["story_type"] class="storyType form-control pull-right" id="story_type">
+	
+	<option value="feature">feature</option>
+	<option value="bug">bug</option>
+	<option value="chore"> chore</option>
+	</select>
+	</div>
+	</div>
+	
+	<br>
+
+
+	<div class="row">
+	<div class="col-xs-6">
+	<label>Points</label>
+
+	
+	
+	<select name=story["points"] class="storyPoints form-control pull-right">
+	<option value="unestimated">unestimated</option>
+	<option value=0>0</option>
+	<option value=1>1</option>
+	<option value=2>2</option>
+	<option value=3>3</option>
+	</select>
+	</div>
+	</div>
+	
+	<br>
+
+	<div class="row">
+		<div class="col-xs-6">
+			<label> State </label>
+				<select name=story["state"] class="storyState form-control pull-right">
+				<option value="unscheduled">unscheduled</option>
+				<option value="unstarted">unstarted</option>
+				<option value="started" >started</option>
+				<option value="finished">finished</option>
+				<option value="delivered">delivered</option>
+				<option value="rejected">rejected</option>
+				<option value="accepted">accepted</option>
+				</select>
+		</div>
+	</div>
+	<br>
+
+
+	<label>Description</label>
+	<br>
+	<textarea type=text name=story["description"] class="storyDescription form-control description" rows=5>
+	</textarea>
+</form>

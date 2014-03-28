@@ -1,17 +1,64 @@
-<h2>Sign in</h2>
+<div class="home">
+	<div class="row">
+		<div class="col-md-7">
+			<div class="explain">
 
-<%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
-  <div><%= f.label :email %><br />
-  <%= f.email_field :email, autofocus: true %></div>
+			<h1> Story-based backlog management for agile development teams </h1> 
+			<%= image_tag("epictracker.jpeg", :alt => "epictracker", height: "425") %>
+			<p>Epic Tracker is similar to <a href="http://www.pivotaltracker.com">Pivotal Tracker</a>
+			</p>
+			</div>
+		</div>
+		<div class="col-md-offset-1"></div>
+		<div class="col-md-4 signin">
+			
+			<h2>Sign in</h2>
+			<p> Click "View Demo Account" to skip the sign in process </p>
+			<form action="/users/sign_in" method="post" accept-charset="utf-8">
+			  
+			   <input
+			      name="authenticity_token"
+			      type="hidden"
+			      value="<%= form_authenticity_token %>">
+				
+			   <input
+			      id="email"
+			      name="user[email]"
+			      type="hidden"
+						value="demouser@gmail.com">
 
-  <div><%= f.label :password %><br />
-    <%= f.password_field :password, autocomplete: "off" %></div>
+			   <input
+			      id="user_password"
+			      name="user[password]"
+			      type="hidden"
+						value="password">
+						
+						<input name="user[remember_me]" type="hidden" value="0">
+						
+						<input class="btn-xl btn-primary" name="commit" type="submit" value="View Demo Account">
+			</form>
+			<br>
+			<hr>
+			<br>
 
-  <% if devise_mapping.rememberable? -%>
-    <div><%= f.check_box :remember_me %> <%= f.label :remember_me %></div>
-  <% end -%>
+			<%= form_for(resource, as: resource_name, url: session_path(resource_name), :html => { :class => "form" } ) do |f| %>
+			<div><%= f.label :email %><br />
+				<%= f.email_field :email, autofocus: true, class:"form-control" %></div>
 
-  <div><%= f.submit "Sign in" %></div>
-<% end %>
+				<div><%= f.label :password %><br />
+					<%= f.password_field :password, autocomplete: "off", class:"form-control" %></div>
 
-<%= render "devise/shared/links" %>
+					<% if devise_mapping.rememberable? -%>
+					<div><%= f.check_box :remember_me %> <%= f.label :remember_me %></div>
+					<% end -%>
+
+					<div><%= f.submit "Sign in", class:"btn btn-large btn-primary " %></div>
+					<% end %>
+					
+					<br>
+
+					<%= render "devise/shared/links" %>
+
+				</div>
+
+		</div>

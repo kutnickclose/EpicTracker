@@ -12,7 +12,13 @@ window.Epictracker.Views.StoryForm = Backbone.View.extend({
 	},
 	
 	events: {
-		"click .save" : "saveStory"
+		"click .save" : "saveStory",
+		"click .cancel" : "cancelStory"
+	},
+	
+	cancelStory: function (event) {
+		event.preventDefault()
+		this.$(".editForm").addClass("hidden");
 	},
 	
 	saveStory: function(event) {

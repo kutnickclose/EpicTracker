@@ -18,6 +18,7 @@ gem 'uuidtools'
 gem 'figaro'
 gem "paperclip"
 gem "aws-sdk"
+gem "thin"
 
 group :doc do
   gem 'sdoc', require: false

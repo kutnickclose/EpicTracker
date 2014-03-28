@@ -186,16 +186,19 @@ window.Epictracker.Views.ListShow = Backbone.CompositeView.extend({
 		this.model.stories().sort();
 		var storiesToMove = new Array();
 		this.model.stories().each(function(story) {
-			if (story.get('state') === "unstarted" || story.get('state') === "unscheduled") {
+			if ((story.get('state') === "unstarted" || story.get('state') === "unscheduled")  && story.get('points') !== "unestimated") {
 				storiesToMove.push(story)
 			}
 		});
 		
 		var storyToMove = storiesToMove[storiesToMove.length-1]
 		if (storyToMove) {
+			var projectID = this.model.get('project_id')
 			var backlog_id = parseInt(this.model.stories().last().get('list_id')) - 1
+			var rank = Epictracker.projects.get(projectID).lists().get(backlog_id).stories().first().get('rank') / 2;
 			storyToMove.set({
-				list_id: backlog_id
+				list_id: backlog_id,
+				rank: rank
 			})
 			storyToMove.save()
 			var sum = 0

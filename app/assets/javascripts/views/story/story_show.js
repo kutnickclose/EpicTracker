@@ -49,7 +49,7 @@ window.Epictracker.Views.StoryShow = Backbone.CompositeView.extend({
 	},
 	
 	setStoryColors: function () {
-		if (this.model.get("state") === "started" || this.model.get("state") === "finished" || this.model.get("state") === "delivered") {
+		if (this.model.get("state") === "started" || this.model.get("state") === "finished" || this.model.get("state") === "delivered" || this.model.get("state") === "rejected") {
 			this.$el.addClass("started")
 		} else if (this.model.get("state") === "accepted") {
 			this.$el.addClass("accepted")

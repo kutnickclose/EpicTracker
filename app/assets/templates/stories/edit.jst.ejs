@@ -1,7 +1,5 @@
 <form class="editForm "  name="frmPreselect">
-	<span class="save">&#9662; &nbsp;</span>
-	<br>
-	<label> Title </label>
+	<label><span class="save">&#9662;</span> Title </label>
 	<input type="text" name=story[title] placeholder="story title" class="storyTitle form-control inline" value="<%= story.escape('title') %>">
 	<button class='save btn btn-xs btn-primary'>Save</button>
 	<button class='cancel btn btn-xs btn-default'>Cancel</button>
@@ -35,12 +33,6 @@
 	<div class="row">
 	<div class="col-xs-6">
 	<label>Points</label>
-	<% if (story.get('points') === "unestimated") { %>
-		<button class="setZero btn btn-primary btn-xs"><%='0'%></button>
-		<button class="setOne btn btn-primary btn-xs"><%='1'%></button>
-		<button class="setTwo btn btn-primary btn-xs"><%='2'%></button>
-		<button class="setThree btn btn-primary btn-xs"><%='3'%></button>
-	<% } %>
 	<% if (story.get('points') === "0") { %>
 		<button class="btn btn-primary btn-xs disabled"><%='0'%></button>
 	<% } else if (story.get('points') === "1" ) { %>
@@ -49,8 +41,6 @@
 		<button class="btn btn-primary btn-xs disabled"><%='2'%></button>
 	<% } else if (story.get('points') === "3" ) { %>
 		<button class="btn btn-primary btn-xs disabled"><%='3'%></button>
-	<% } else { %>
-		<button class="btn btn-default btn-xs disabled"><%='&nbsp; '%></button>
 	<% } %>
 	
 	
